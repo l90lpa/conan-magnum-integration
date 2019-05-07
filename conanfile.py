@@ -71,9 +71,17 @@ class MagnumIntegrationConan(ConanFile):
         if self.settings.os == 'Windows':
             del self.options.fPIC
 
+    def configure(self):
+        # To fix issue with resource management, see here:
+        # https://github.com/mosra/magnum/issues/304#issuecomment-451768389
+        if self.options.shared:
+            self.options['magnum'].add_option('shared', True)
+
     def requirements(self):
         if self.options.with_imgui:
             self.requires("imgui/1.69@bincrafters/stable")
+        if self.options.with_bullet:
+            self.requires("bullet3/2.88@bincrafters/stable")
 
     def source(self):
         source_url = "https://github.com/mosra/magnum-integration"
@@ -123,8 +131,11 @@ class MagnumIntegrationConan(ConanFile):
         allLibs = []
         if self.options.with_imgui:
             allLibs.append("MagnumImGuiIntegration")
+        if self.options.with_bullet:
+            allLibs.append("MagnumBulletIntegration")
 
-        # Sort all built libs according to above, and reverse result for correct link order
+        # Sort all built libs according to above, and reverse result
+        # for correct link order
         suffix = '-d' if self.settings.build_type == "Debug" else ''
         builtLibs = tools.collect_libs(self)
         self.cpp_info.libs = sort_libs(
