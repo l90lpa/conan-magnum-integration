@@ -64,8 +64,8 @@ class MagnumIntegrationConan(ConanFile):
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
 
-    requires = ("magnum/2019.01@rhololkeolke/testing",
-                "corrade/2019.01@rhololkeolke/testing")
+    requires = ("magnum/2019.01@rhololkeolke/stable",
+                "corrade/2019.01@rhololkeolke/stable")
 
     def config_options(self):
         if self.settings.os == 'Windows':
