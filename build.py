@@ -9,6 +9,12 @@ if __name__ == "__main__":
     builder.add(
         settings={"arch": "x86_64", "build_type": "Release"},
         options={
+            "corrade:with_rc": True,
+            "magnum:with_sdl2application": False,
+            "magnum:with_glfwapplication": True,
+            "magum:with_tgaimporter": True,
+            "magnum:with_anysceneimporter": True,
+            "magnum:with_meshtools": True,
             "magnum-integration:with_imgui": True,
             "magnum-integration:with_bullet": True,
             "bullet3:double_precision": True,
@@ -17,6 +23,12 @@ if __name__ == "__main__":
     builder.add(
         settings={"arch": "x86_64", "build_type": "Debug"},
         options={
+            "corrade:with_rc": True,
+            "magnum:with_sdl2application": False,
+            "magnum:with_glfwapplication": True,
+            "magum:with_tgaimporter": True,
+            "magnum:with_anysceneimporter": True,
+            "magnum:with_meshtools": True,
             "magnum-integration:with_imgui": True,
             "magnum-integration:with_bullet": True,
             "bullet3:double_precision": True,
