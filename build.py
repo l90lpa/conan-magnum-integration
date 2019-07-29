@@ -8,11 +8,19 @@ if __name__ == "__main__":
     builder = ConanMultiPackager()
     builder.add(
         settings={"arch": "x86_64", "build_type": "Release"},
-        options={"dart:shared": False},
+        options={
+            "magnum-integration:with_imgui": True,
+            "magnum-integration:with_bullet": True,
+            "bullet3:double_precision": True,
+        },
     )
     builder.add(
         settings={"arch": "x86_64", "build_type": "Debug"},
-        options={"dart:shared": False},
+        options={
+            "magnum-integration:with_imgui": True,
+            "magnum-integration:with_bullet": True,
+            "bullet3:double_precision": True,
+        },
     )
 
     # add c++17 build configs
