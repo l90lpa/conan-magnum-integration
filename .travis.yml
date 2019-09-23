@@ -2,52 +2,60 @@ env:
   global:
   - CONAN_USERNAME: rhololkeolke
   - CONAN_LOGIN_USERNAME: rhololkeolke
-  - CONAN_CHANNEL: testing
+  - CONAN_CHANNEL: stable
   - CONAN_UPLOAD: https://api.bintray.com/conan/rhololkeolke/public-conan
   - CONAN_STABLE_BRANCH_PATTERN: stable/*
   - CONAN_UPLOAD_ONLY_WHEN_STABLE: 1
   - CONAN_ARCHS: x86_64
   - CONAN_BUILD_POLICY: outdated
-  - CONAN_REMOTES: https://api.bintray.com/conan/bincrafters/public-conan,https://api.bintray.com/conan/bincrafters/public-conan
+  - CONAN_REMOTES: "https://api.bintray.com/conan/bincrafters/public-conan"
+  - CONAN_TOTAL_PAGES: 8
   - secure: FJ2790IOBx+0mAgKcJZjWzYbez6TnHlMU9f9varYjGR/vFn1e7MC1bJbqtQoXTBnrBUPZt+ya/d87wVA7CES+E4V+mKK1cxcvJJJo54MnWCpUlwEsdyCfHd5d7RjWbEdNBkDPH8eWNG/V2oCBn4IeBjM17bibvnjv2n4aYJu8w7oenG7gbn9wgdegGP91OdxvioWLbq2bRZCApNhruDazYrbGLtrWeOS3aZyYCcsAwC4PgOS4/Y12RJr0HKbc7OtVY3Ph9v0agseJiNtGFgGg1GVTwXW4RtpSKJNIm1ZU114qpy3wpgpHaMsPHgTUzqL+C5wxZzsbMbVEI4/cw/i5d4ZMfyyJIrwCozqhxT0+EA1yo6CKDQWORCgbh/91EPX//oXOWamTqrlTZfecOGk6qD7qhc2e1vGbJqXXvyvFNk6QHnUk11bCHtwzcbZmyUYQA2ZLNE6Fudi1MZRdfmPOBF9Pt+MHeJ4TNrpIAbMUbM6t26j9+rAC6dwW52cIrt9mf1D9ySp+KG3IzE+pbpSIbfqzfR662qnPFLPPzU6N3uo6UHZJjxr3eVrTCqMDPRjflSV17K7cfty4oK6vMp9Iivi/MuJqcCc8trAkgDCxUVqundFitW9YlaG7Oiap9vYuJ41qMgVcYhRKJG6ltSiOCFunrI4tP4sC7iDC5w4HpU=
-linux:
+linux: &linux
   os: linux
   dist: xenial
   sudo: required
   language: python
   python: '3.7'
-  install: &1
-  - pip install -U conan conan_package_tools
-  addons: &2
-    apt:
-      sources:
-      - llvm-toolchain-xenial-8
-      - llvm-toolchain-xenial-7
-      packages:
-      - figlet
+  services: 
+    - docker
 matrix:
   include:
-  - os: linux
-    dist: xenial
-    sudo: required
-    language: python
-    python: '3.7'
-    install: *1
-    addons: *2
-    env: CONAN_CLANG_VERSIONS=8 CC=/usr/bin/clang-8 CXX=/usr/bin/clang++-8 PACKAGES=clang-8
-before_install:
-- sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-- sudo apt-get update -q
-- sudo apt-get install libstdc++-7-dev ${PACKAGES} -y
-- figlet "CMake"
-- wget https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3-Linux-x86_64.sh
-- chmod +x cmake-3.14.3-Linux-x86_64.sh
-- sudo ./cmake-3.14.3-Linux-x86_64.sh --prefix=/usr/local/ --skip-license --exclude-subdir
-- rm cmake-3.14.3-Linux-x86_64.sh
-- cmake --version
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-shared"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-shared-imgui"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-shared-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-shared-imgui-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-shared"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-shared-imgui"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-shared-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-shared-imgui-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-static"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-static-imgui"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-static-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Release-static-imgui-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-static"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-static-imgui"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-static-eigen"
+  - <<: *linux
+    env: CONAN_CLANG_VERSIONS=8 CONAN_DOCKER_IMAGE=rhololkeolke/clang8 CONAN_CURRENT_PAGE="Debug-static-imgui-eigen"
 install:
-- chmod +x .travis/install.sh
-- "./.travis/install.sh"
+  - chmod +x .travis/install.sh
+  - "./.travis/install.sh"
 script:
-- chmod +x .travis/run.sh
-- "./.travis/run.sh"
+  - chmod +x .travis/run.sh
+  - "./.travis/run.sh"
