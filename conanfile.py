@@ -44,6 +44,7 @@ class MagnumIntegrationConan(ConanFile):
     options = {
         "shared": [True, False],
         "fPIC": [True, False],
+        'with_eigen': [True, False],
         "with_bullet": [True, False],
         "with_dart": [True, False],
         "with_glm": [True, False],
@@ -53,6 +54,7 @@ class MagnumIntegrationConan(ConanFile):
     default_options = {
         "shared": False,
         "fPIC": True,
+        'with_eigen': False,
         "with_bullet": False,
         "with_dart": False,
         "with_glm": False,
@@ -82,6 +84,8 @@ class MagnumIntegrationConan(ConanFile):
             self.requires("imgui/1.69@bincrafters/stable")
         if self.options.with_bullet:
             self.requires("bullet3/2.88@bincrafters/stable")
+        if self.options.with_eigen:
+            self.requires("eigen/3.3.7@conan/stable")
 
     def source(self):
         git = tools.Git(folder=self._source_subfolder)
