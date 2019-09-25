@@ -81,7 +81,7 @@ class MagnumIntegrationConan(ConanFile):
 
     def requirements(self):
         if self.options.with_imgui:
-            self.requires("imgui/1.69@bincrafters/stable")
+            self.requires("imgui/1.73@bincrafters/stable")
         if self.options.with_bullet:
             self.requires("bullet3/2.88@bincrafters/stable")
         if self.options.with_eigen:
