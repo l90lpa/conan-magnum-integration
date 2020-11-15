@@ -24,7 +24,7 @@ def sort_libs(correct_order, libs, lib_suffix='', reverse_result=False):
 
 class MagnumIntegrationConan(ConanFile):
     name = "magnum-integration"
-    version = "2019.01.20190921"
+    version = "2020.06"
     description = ("Magnum Integration - Integration libraries for the Magnum "
                    "C++11/C++14 graphics engine")
     topics = ("conan", "corrade", "graphics", "rendering", "3d", "2d",
@@ -66,8 +66,8 @@ class MagnumIntegrationConan(ConanFile):
     _source_subfolder = "source_subfolder"
     _build_subfolder = "build_subfolder"
 
-    requires = ("magnum/2019.01.20190921@rhololkeolke/stable",
-                "corrade/2019.01.20190921@rhololkeolke/stable")
+    requires = ("magnum/2020.06@helmesjo/stable",
+                "corrade/2020.06@helmesjo/stable")
 
     def config_options(self):
         if self.settings.os == 'Windows':
@@ -90,7 +90,7 @@ class MagnumIntegrationConan(ConanFile):
     def source(self):
         git = tools.Git(folder=self._source_subfolder)
         git.clone('https://github.com/mosra/magnum-integration.git')
-        git.checkout('50e583d352dd8ee7588eeee645e8bf9df7d4a8a2')
+        git.checkout('v2020.06')
 
     def _configure_cmake(self):
         cmake = CMake(self)
